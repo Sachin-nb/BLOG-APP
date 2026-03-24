@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Detail | Editorial</title>
+    <!-- Premium Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --bg-color: #f8f9fc;
+            --text-main: #1a2942;
+            --text-muted: #5a6c7d;
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(26, 41, 66, 0.06);
+            --shadow-md: 0 8px 24px rgba(26, 41, 66, 0.12);
+            --shadow-lg: 0 16px 40px rgba(26, 41, 66, 0.15);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --max-width: 800px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            line-height: 1.8;
+            padding: 80px 20px 60px;
+            min-height: 100vh;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out forwards;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 60px 48px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        
+        nav {
+            margin-bottom: 50px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: -8px -12px;
+        }
+        
+        .back-link:hover {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--accent-hover);
+            transform: translateX(-4px);
+        }
+
+        .back-link::before {
+            content: '←';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .post-header {
+            margin-bottom: 60px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 40px;
+        }
+        
+        .post-meta {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+        }
+        
+        .post-title {
+            font-family: var(--font-serif);
+            font-size: 3.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
+
+        .post-author-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        .post-author-box::before {
+            content: '';
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .author-name {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+        
+        .post-image-container {
+            margin: 50px 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .post-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            display: block;
+        }
+
+        .post-image-container:hover img {
+            transform: scale(1.02);
+        }
+        
+        .post-body {
+            font-size: 1.15rem;
+            color: #2d3748;
+            margin-top: 50px;
+            white-space: pre-line;
+            font-family: 'Georgia', serif;
+            line-height: 2;
+            letter-spacing: 0.3px;
+        }
+
+        /* Comments Section Styling */
+        .comments-header {
+            margin-top: 100px;
+            margin-bottom: 50px;
+            border-top: 3px solid var(--text-main);
+            padding-top: 50px;
+        }
+
+        .comments-title {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        .comment {
+            margin-bottom: 48px;
+            padding: 28px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f8f9fc, #f0f4f8);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .comment:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+        }
+
+        .comment:last-child {
+            margin-bottom: 0;
+        }
+
+        .comment-header {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .comment-header::before {
+            content: '';
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), #60a5fa);
+            flex-shrink: 0;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .comment-email {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .comment-body {
+            font-size: 1rem;
+            color: #374151;
+            line-height: 1.8;
+            margin-left: 48px;
+        }
+        
+        .loading, .error {
+            text-align: center;
+            padding: 120px 20px;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .error {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+            border-radius: 12px;
+            border: 1px solid #fca5a5;
+            box-shadow: 0 4px 12px rgba(127, 29, 29, 0.1);
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        @media (max-width: 768px) {
+            .post-title { 
+                font-size: 2.4rem; 
+            }
+
+            .post-body {
+                font-size: 1.05rem;
+            }
+
+            .comments-title {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 40px 24px;
+                border-radius: 12px;
+            }
+
+            body { 
+                padding: 60px 12px 40px; 
+            }
+
+            .post-header {
+                margin-bottom: 40px;
+                padding-bottom: 30px;
+            }
+
+            .comment {
+                padding: 20px;
+            }
+
+            .comment-body {
+                margin-left: 44px;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .post-title { 
+                font-size: 1.9rem;
+            }
+
+            .container {
+                padding: 28px 16px;
+            }
+
+            .post-header {
+                margin-bottom: 32px;
+            }
+
+            .comment-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comment-body {
+                margin-left: 0;
+                margin-top: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="back-link">Back to Journal</a>
+        </nav>
+        
+        <main id="post-content-container">
+            <div class="loading">Preparing the article...</div>
+        </main>
+
+        <section id="comments-section-container" style="display: none;">
+            <div class="comments-header">
+                <h2 id="comments-title-count" class="comments-title">Comments</h2>
+            </div>
+            <div id="comments-list">
+                <!-- Comments will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        async function loadPostDetail() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const postId = urlParams.get('id');
+                
+                if (!postId) {
+                    throw new Error('No article ID provided.');
+                }
+                
+                // Fetch post details first
+                const postResponse = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+                if (!postResponse.ok) throw new Error('Article not found or moved.');
+                const post = await postResponse.json();
+                
+                // Fetch user info
+                let authorFullInfo = `Author ID: ${post.userId}`;
+                try {
+                    const userResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${post.userId}`);
+                    if (userResponse.ok) {
+                        const user = await userResponse.json();
+                        authorFullInfo = `By <span class="author-name">${user.name}</span> • @${user.username}`;
+                    }
+                } catch (e) {
+                     console.error("User fetch failed", e);
+                }
+                
+                // Fetch comments
+                const commentsResponse = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`);
+                const comments = await commentsResponse.json();
+                
+                // Image URL
+                const imageUrl = `https://picsum.photos/1200/800?random=${postId}`;
+                
+                const contentContainer = document.getElementById('post-content-container');
+                contentContainer.innerHTML = `
+                    <article>
+                        <header class="post-header">
+                            <div class="post-meta">Story ID: ${post.id} • Archive</div>
+                            <h1 class="post-title">${post.title}</h1>
+                            <div class="post-author-box">
+                                ${authorFullInfo}
+                            </div>
+                        </header>
+                        
+                        <div class="post-image-container">
+                            <img src="${imageUrl}" alt="${post.title}">
+                        </div>
+                        
+                        <div class="post-body">
+                            ${post.body}
+                        </div>
+                    </article>
+                `;
+
+                // Render Comments
+                const commentsSection = document.getElementById('comments-section-container');
+                const commentsList = document.getElementById('comments-list');
+                const commentsTitle = document.getElementById('comments-title-count');
+                
+                commentsSection.style.display = 'block';
+                commentsTitle.innerText = `Discussion (${comments.length})`;
+                
+                let commentsHtml = '';
+                comments.forEach((comment, index) => {
+                    const delay = 0.5 + Math.min(index * 0.1, 1);
+                    commentsHtml += `
+                        <div class="comment" style="opacity: 0; animation: fadeInUp 0.6s ease forwards; animation-delay: ${delay}s">
+                            <div class="comment-header">
+                                <div class="comment-author">${comment.name}</div>
+                                <div class="comment-email">${comment.email}</div>
+                            </div>
+                            <div class="comment-body">${comment.body}</div>
+                        </div>
+                    `;
+                });
+                commentsList.innerHTML = commentsHtml;
+
+            } catch (error) {
+                document.getElementById('post-content-container').innerHTML = `
+                    <div class="error">
+                        <strong>Something went wrong.</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        loadPostDetail();
+    </script>
+</body>
+</html>
+
+
